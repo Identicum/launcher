@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<div th:replace="fragments/header :: header"></div>
+    	<title>Application Launcher</title>
+	</head>
+	<body style="padding-top: 70px">
+		<div th:replace="fragments/menu :: top"></div>
+		<div class="container">
+			<ul class="list-inline">
+				<li th:each="link : ${links}" class="list-inline-item link">
+					<a th:href="${link.target}" target="_new">
+						<div class="icon text-center" th:style="${'color: ' + link.color}">
+							<i th:class="${'fa-2x ' + link.icon}"></i>
+						</div>
+						<div class="display text-center" th:text="${link.display}"></div>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<style>
+			.link a {
+				background-color: whitesmoke;
+				display: block;
+				min-width: 112px;
+				padding-bottom: 10px;
+				border-radius: 6px;
+				margin-bottom: 10px;
+			}
+			
+			.link a i {
+				line-height: 80px;
+				display: block;
+			}
+			
+			.link .display {
+				text-decoration: none;
+				color: #666;
+				font-size: 0.9rem;
+			}
+			
+			.link a:hover {
+				background-color: #666;
+				text-decoration: none;
+			}
+			
+			.link a:hover div.icon {
+				color: #ffffff !important;
+			}
+			
+			.link a:hover div.display {
+				color: #fff !important;
+			}
+		</style>
+	</body>
+</html>

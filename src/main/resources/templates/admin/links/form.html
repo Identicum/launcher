@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/header :: header"></div>
+    <title>App Launcher - Links</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/css/bootstrap-colorpicker.min.css}"></link>
+</head>
+<body style="padding-top: 70px">
+	<div th:replace="fragments/menu :: top"></div>
+	
+	<div class="container">
+			
+			<h2>Link data</h2>
+			<form action="#" th:action="@{/admin/links/{id}(id=${link.id == null ? '' : link.id})}" th:object="${link}" method="post">
+			    <div class="form-group">
+				    <label for="display">Display</label>
+				    <input type="text" th:field="*{display}" id="display" placeholder="Display..." class="form-control">
+				    <span th:if="${#fields.hasErrors('display')}" th:errors="*{display}"></span>
+			    </div>
+			    <div class="form-group">
+			    	<label for="target">Target</label>
+			    	<input type="text" th:field="*{target}" id="target" placeholder="Target..." class="form-control">
+			    	<span th:if="${#fields.hasErrors('target')}" th:errors="*{target}"></span>
+			    </div>
+			    <div class="form-group">
+			    	<label for="icon">Icon</label>
+			    	<input type="text" th:field="*{icon}" id="icon" placeholder="Icon..." class="form-control">
+			    	<span th:if="${#fields.hasErrors('icon')}" th:errors="*{icon}"></span>
+			    </div>
+			    <div class="form-group">
+			    	<label for="color">Color</label>
+			    	<div id="cp1" class="input-group">
+					  <span class="input-group-prepend">
+					    <span class="input-group-text colorpicker-input-addon"><i></i></span>
+					  </span>
+					  <input type="text" class="form-control" th:field="*{color}" id="color"/>
+					</div>
+					<span th:if="${#fields.hasErrors('color')}" th:errors="*{color}"></span>			    	
+			    </div>
+			    <div class="form-group">
+			    	<input type="submit" value="Save" class="btn btn-success">
+			    </div>   
+			</form>
+
+	</div>
+	<script th:src="@{/resources/js/bootstrap-colorpicker.min.js}"></script>
+	<script>
+	$(function () {
+		$("#cp1").colorpicker({format: "hex"});
+	});
+	</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/header :: header"></div>
+    <title>App Launcher Welcome</title>
+</head>
+<body style="background-color: #dfe6e9">
+
+	<div class="container text-center">
+		<br/>
+		<h2>Demo Gluu SSO with OAuth</h2>
+		<h1>Application Launcher</h1>
+		<hr>
+		<p>
+			Esta aplicación presenta los diferentes accesos a aplicaciones que tiene un usuario 
+			basado en los permisos obtenidos del token OIDC en el claim <code>member_of</code>
+		</p>
+		<p>
+			Esta página es pública y se encuentra visbile con fines prácticos de seguir la demo. Para iniciar sesión haga click en el
+			siguiente botón.
+		</p>
+	    <div class="starter-template">
+	        <a class="btn btn-success" th:href="@{/}" style="min-width: 200px">Ingresar</a>
+	    </div>
+
+	</div>
+</body>
+</html>

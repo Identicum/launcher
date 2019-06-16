@@ -28,4 +28,4 @@ Or build `identicum/launcher` from source:
 #### Run the container
 Run the image, binding associated ports, and mounting your custom application.properties:
 
-    docker run -p 8080:8080 -v $(pwd)/application.properties:/usr/local/tomcat/webapps/demo-app/WEB-INF/classes/application.properties identicum/launcher:latest
+    docker run -p 8080:8080 -v $(pwd)/application.properties:/usr/local/tomcat/webapps/launcher/WEB-INF/classes/application.properties identicum/launcher:latest

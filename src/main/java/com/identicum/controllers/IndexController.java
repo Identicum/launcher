@@ -22,12 +22,12 @@ import com.identicum.services.LinkRepository;
 
 @Controller
 public class IndexController {
-	
+
 	private final static Logger logger = LoggerFactory.getLogger(IndexController.class);
-	
+
 	@Autowired
     LinkRepository linkRepository;
-	
+
 	@GetMapping("/welcome")
 	public String welcome() {
 		return "welcome";
@@ -36,28 +36,28 @@ public class IndexController {
 	@SuppressWarnings("unchecked")
 	@GetMapping({"", "/", "/menu"})
 	public String launchpad(Model model, OAuth2Authentication auth ) {
-    	
+
     	try {
-    		logger.debug("Auth recibido: " + new ObjectMapper().writeValueAsString(auth));
+    		logger.debug("Spring auth: " + new ObjectMapper().writeValueAsString(auth));
     	} catch(JsonProcessingException jpe) {
-    		
+
     	}
 		Map<String, Object> details = (HashMap<String, Object>)auth.getUserAuthentication().getDetails();
     	logger.debug("User details --> {}", details);
-	
+
     	Set<Link> links = null;
     	if( details.containsKey("member_of")) {
-        	
+
         	if(details.get("member_of") instanceof List) {
         		logger.debug("Getting links for roles {}", details.get("member_of"));
         		links = linkRepository.getLinksByRoles( (ArrayList<String>)details.get("member_of") );
         	}
-        	else {	
+        	else {
         		logger.debug("Getting links for role {}", details.get("member_of").toString());
         		links = linkRepository.getLinksByRoles( Arrays.asList( details.get("member_of").toString() ));
         	}
         }
-    	
+
     	logger.debug("Links found: {}", links);
     	model.addAttribute("name", details.get("given_name") + " " + details.get("family_name"));
     	model.addAttribute("links", links);

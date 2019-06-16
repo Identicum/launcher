@@ -1,6 +1,6 @@
 FROM identicum/centos-java-maven:latest AS build-env
 
-COPY source .
+RUN git clone https://github.com/Identicum/launcher .
 RUN /usr/bin/mvn package
 
 # ############################################################################

@@ -26,6 +26,6 @@ Or build `identicum/launcher` from source:
 * Customize to your environment
 
 #### Run the container
-Run the image, binding associated ports, and mounting your custom application.properties:
+Run the image, binding associated ports, and mounting your custom application.properties and data directory (for the H2 database):
 
-    docker run -p 8080:8080 -v $(pwd)/application.properties:/usr/local/tomcat/webapps/launcher/WEB-INF/classes/application.properties identicum/launcher:latest
+    docker run -p 8080:8080 -v $(pwd)/application.properties:/usr/local/tomcat/webapps/launcher/WEB-INF/classes/application.properties:ro -v $(pwd)/data:/data identicum/launcher:latest

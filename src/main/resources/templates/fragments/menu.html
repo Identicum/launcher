@@ -12,11 +12,11 @@
 			<ul class="navbar-nav my-2 my-lg-0 navbar-dark bg-dark">
 				<li class="nav-item dropdown">
 					  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          				<i class="fas fa-user fa-fw"></i> <span sec:authentication="name"></span>
+          				<i class="fas fa-user fa-fw"></i> <span sec:authentication="sub"></span>
 					  </a>
 					  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 					  	<a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" th:href="@{/admin/links}">Manage links</a>
-					    <a class="dropdown-item" href="https://demo-gluu.apps.identicum.com/oxauth/restv1/end_session?post_logout_redirect_uri=https://demo-apps-java.apps.identicum.com/launcher/logout" id="logout">Exit</a>
+					    <a class="dropdown-item" href="https://gluu.apps.identicum.com/oxauth/restv1/end_session?post_logout_redirect_uri=https://launcher.apps.identicum.com/launcher/logout" id="logout">Exit</a>
 					  </div>
 					</div>
 				</li>

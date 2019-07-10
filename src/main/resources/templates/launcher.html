@@ -9,7 +9,7 @@
 		<div class="container">
 			<ul class="list-inline">
 				<li th:each="link : ${links}" class="list-inline-item link">
-					<a th:href="${link.target}" target="_new">
+					<a th:href="${link.target}" target="_blank">
 						<div class="icon text-center" th:style="${'color: ' + link.color}">
 							<i th:class="${'fa-2x ' + link.icon}"></i>
 						</div>
@@ -27,27 +27,27 @@
 				border-radius: 6px;
 				margin-bottom: 10px;
 			}
-			
+
 			.link a i {
 				line-height: 80px;
 				display: block;
 			}
-			
+
 			.link .display {
 				text-decoration: none;
 				color: #666;
 				font-size: 0.9rem;
 			}
-			
+
 			.link a:hover {
 				background-color: #666;
 				text-decoration: none;
 			}
-			
+
 			.link a:hover div.icon {
 				color: #ffffff !important;
 			}
-			
+
 			.link a:hover div.display {
 				color: #fff !important;
 			}

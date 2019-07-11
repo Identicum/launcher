@@ -57,10 +57,11 @@ public class IndexController {
         		links = linkRepository.getLinksByRoles( Arrays.asList( details.get("member_of").toString() ));
         	}
         }
-
-    	logger.debug("Links found: {}", links);
-    	model.addAttribute("name", details.get("given_name") + " " + details.get("family_name"));
-    	model.addAttribute("links", links);
-        return "launcher";
+			String userName = details.get("given_name") + " " + details.get("family_name");
+    	logger.debug("Total links found for {}: {}", userName, links);
+			model.addAttribute("links", links);
+			logger.debug("User attrs: given_name({}) - family_name({}) - userName({})", details.get("given_name"), details.get("family_name"), userName);
+    	model.addAttribute("name", userName);
+			return "launcher";
 	}
 }

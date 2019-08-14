@@ -8,7 +8,7 @@
 		<div th:replace="fragments/menu :: top"></div>
 		<div class="container">
 			<ul class="list-inline">
-				<li th:each="link : ${links}" class="list-inline-item link pull-left">
+				<li th:each="link : ${links}" class="list-inline-item link">
 					<a th:href="${link.target}" target="_blank">
 						<div class="icon text-center" th:style="${'color: ' + link.color}">
 							<i th:class="${'fa-2x ' + link.icon}"></i>
@@ -19,6 +19,11 @@
 			</ul>
 		</div>
 		<style>
+		
+			li.link {
+				float: left;
+			}
+		
 			.link a {
 				background-color: whitesmoke;
 				display: block;
@@ -37,6 +42,7 @@
 				text-decoration: none;
 				color: #666;
 				font-size: 0.9rem;
+				height: 42px;
 			}
 
 			.link a:hover {
@@ -50,7 +56,6 @@
 
 			.link a:hover div.display {
 				color: #fff !important;
-				height: 42px;
 			}
 		</style>
 	</body>

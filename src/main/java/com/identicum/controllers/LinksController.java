@@ -21,12 +21,12 @@ import com.identicum.services.LinkRepository;
 @RequestMapping("/admin/links")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class LinksController {
-	
+
 	private final static Logger logger = LoggerFactory.getLogger(LinksController.class);
-	
+
 	@Autowired
     LinkRepository linkRepository;
-	
+
 	private final static String VIEWS_BASE = "/admin/links";
 
 	@GetMapping({"","/"})
@@ -35,13 +35,13 @@ public class LinksController {
         model.addAttribute("links", linkRepository.findAllByOrderByDisplayAsc());
         return VIEWS_BASE + "/index";
     }
-	
-	
+
+
 	@GetMapping("/new")
     public String addForm(Link link) {
         return "admin/links/form";
     }
-	
+
 	@PostMapping({"","/"})
     public String create(@Valid Link link, BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -52,28 +52,28 @@ public class LinksController {
         model.addAttribute("links", linkRepository.findAllByOrderByDisplayAsc());
         return VIEWS_BASE + "/index";
     }
-	
+
 	@GetMapping("/{id}")
 	public String editForm(@PathVariable("id") long id, Model model) {
 	    Link link = linkRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid link Id:" + id));
 	    model.addAttribute("link", link);
 	    return VIEWS_BASE + "/form";
 	}
-	
+
 	@PostMapping("/{id}")
 	public String update(@PathVariable("id") long id, @Valid Link link, BindingResult result, Model model) {
 	    if (result.hasErrors()) {
 	        link.setId(id);
 	        return VIEWS_BASE + "/form";
 	    }
-	    // esto es una chinada. Piso los roles porque sino me los elimina ya que el Link que recibo lo tiene vacío
+	    // FIX THIS.  Overwrites role or else they get deleted. Received link has empty roles.
 	    Link oldLink = linkRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid link Id:" + id));
 	    link.getRoles().addAll( oldLink.getRoles() );
 	    linkRepository.save(link);
 	    model.addAttribute("links", linkRepository.findAllByOrderByDisplayAsc());
 	    return VIEWS_BASE + "/index";
 	}
-	     
+
 	@GetMapping("/{id}/delete")
 	public String delete(@PathVariable("id") long id, Model model) {
 	    Link link = linkRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid link Id:" + id));
@@ -81,5 +81,5 @@ public class LinksController {
 	    model.addAttribute("links", linkRepository.findAllByOrderByDisplayAsc());
 	    return VIEWS_BASE + "/index";
 	}
-	
+
 }

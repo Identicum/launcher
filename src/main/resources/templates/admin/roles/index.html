@@ -1,46 +1,45 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-	<div th:replace="fragments/header :: header"></div>
-    <title>App Launcher - Links</title>
-</head>
-<body style="padding-top: 70px">
-	<div th:replace="fragments/menu :: top"></div>
-	
-	<div class="container">
-		<div th:switch="${roles}">
-    		<div th:case="null">
-    			<div class="float-right btn-group" role="group" aria-label="Basic example">
-    				<a class="btn btn-primary" th:href="@{/admin/links}"><i class="fas fa-long-arrow-alt-left fa-fw"></i> Back</a>
-    				<a class="btn btn-primary" th:href="@{/admin/links/{id}/roles/new(id=${link.id})}"><i class="fas fa-plus fa-fw"></i> Add a new role</a>
-    			</div>
-    			<h2>No roles yet!</h2>
-    		</div>
-	        <div th:case="*">
-	        	<div class="float-right btn-group" role="group" aria-label="Basic example">
-    				<a class="btn btn-primary" th:href="@{/admin/links}"><i class="fas fa-long-arrow-alt-left fa-fw"></i> Back</a>
-    				<a class="btn btn-primary" th:href="@{/admin/links/{id}/roles/new(id=${link.id})}"><i class="fas fa-plus fa-fw"></i> Add a new role</a>
-    			</div>
-	            <h2>Roles for link [[${link.display}]]</h2>
-	            <table class="table">
-	                <thead>
-	                    <tr>
-	                        <th>Role</th>
-	                        <th class="text-right">Actions</th>
-	                    </tr>
-	                </thead>
-	                <tbody>
-		                <tr th:each="role : ${roles}">
-		                    <td th:text="${role.name}"></td>
-		                    <td class="text-right">
-		                    	<a th:href="@{/admin/links/{id}/roles/{roleId}(id=${link.id}, roleId=${role.id})}" title="Edit link"><i class="fas fa-pencil-alt fa-fw"></i></a>
-		                        <a th:href="@{/admin/links/{id}/roles/{roleId}/delete(id=${link.id}, roleId=${role.id})}" title="Delete link"><i class="fas fa-trash-alt fa-fw"></i></a>
-		                    </td>
-		                </tr>
-		            </tbody>
-		        </table>
-		    </div>      
+	<head>
+		<div th:replace="fragments/header :: header"></div>
+		<title>App Launcher - Links</title>
+	</head>
+	<body style="padding-top: 70px">
+		<div th:replace="fragments/menu :: top"></div>
+		<div class="container">
+			<div th:switch="${roles}">
+				<div th:case="null">
+					<div class="float-right btn-group" role="group" aria-label="Basic example">
+						<a class="btn btn-primary" th:href="@{/admin/links}"><i class="fas fa-long-arrow-alt-left fa-fw"></i> Back</a>
+						<a class="btn btn-primary" th:href="@{/admin/links/{id}/roles/new(id=${link.id})}"><i class="fas fa-plus fa-fw"></i> Add a new role</a>
+					</div>
+					<h2>No roles yet!</h2>
+				</div>
+				<div th:case="*">
+					<div class="float-right btn-group" role="group" aria-label="Basic example">
+						<a class="btn btn-primary" th:href="@{/admin/links}"><i class="fas fa-long-arrow-alt-left fa-fw"></i> Back</a>
+						<a class="btn btn-primary" th:href="@{/admin/links/{id}/roles/new(id=${link.id})}"><i class="fas fa-plus fa-fw"></i> Add a new role</a>
+					</div>
+					<h2>Roles for link [[${link.display}]]</h2>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Role (Enter PUBLIC for access by any authenticated user)</th>
+								<th class="text-right">Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="role : ${roles}">
+								<td th:text="${role.name}"></td>
+								<td class="text-right">
+									<a th:href="@{/admin/links/{id}/roles/{roleId}(id=${link.id}, roleId=${role.id})}" title="Edit link"><i class="fas fa-pencil-alt fa-fw"></i></a>
+									<a th:href="@{/admin/links/{id}/roles/{roleId}/delete(id=${link.id}, roleId=${role.id})}" title="Delete link"><i class="fas fa-trash-alt fa-fw"></i></a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
-	</div>
-</body>
+	</body>
 </html>

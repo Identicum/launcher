@@ -19,35 +19,38 @@ public class OAuthAuthoritiesExtractor implements AuthoritiesExtractor {
 	@Value("${app.roles.regex}")
 	private String rolesRegex;
 
+	@Value("${app.roles.claim}")
+	private String rolesClaim;
+
 	@Override
 	public List<GrantedAuthority> extractAuthorities(Map<String, Object> map) {
 		logger.debug("Received map: {}", map);
-		return this.readLdapGroups(map);
+		return this.readUserGroups(map);
 	}
 
 	@SuppressWarnings("unchecked")
-	private List<GrantedAuthority> readLdapGroups(Map<String, Object> userData) {
+	private List<GrantedAuthority> readUserGroups(Map<String, Object> userData) {
 		Pattern groupPattern = Pattern.compile(this.rolesRegex);
 		List<String> authorities = new ArrayList<>();
-		Object memberOf = userData.get("member_of");
+		Object memberOf = userData.get(this.rolesClaim);
 		if( memberOf != null) {
-			List<String> ldapGroups = new ArrayList<String>();
+			List<String> userGroups = new ArrayList<String>();
 			if(memberOf instanceof List) {
-				ldapGroups = (List<String>) memberOf;
+				userGroups = (List<String>) memberOf;
 			}
 			else {
-				ldapGroups.add(memberOf.toString());
+				userGroups.add(memberOf.toString());
 			}
-			for(String ldapGroup : ldapGroups)
+			for(String userGroup : userGroups)
 			{
-				logger.debug("Parsing received group: {}", ldapGroup);
-				Matcher matcher = groupPattern.matcher(ldapGroup);
+				logger.debug("Parsing received group: {}", userGroup);
+				Matcher matcher = groupPattern.matcher(userGroup);
 				if(matcher.find()) {
 					logger.debug("Adding role: {}", matcher.group(1));
 					authorities.add( "ROLE_" + matcher.group(1).toUpperCase() );
 				}
 				else {
-					logger.debug("Skipped group: {}", ldapGroup);
+					logger.debug("Skipped group: {}", userGroup);
 				}
 			}
 		}

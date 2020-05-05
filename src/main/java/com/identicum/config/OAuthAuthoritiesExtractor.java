@@ -19,7 +19,7 @@ public class OAuthAuthoritiesExtractor implements AuthoritiesExtractor {
 	@Value("${app.roles.regex}")
 	private String rolesRegex;
 
-	@Value("${app.roles.claim}")
+	@Value("${app.roles.claim:member_of}")
 	private String rolesClaim;
 
 	@Override

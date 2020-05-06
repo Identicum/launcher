@@ -22,6 +22,9 @@ public class OAuthAuthoritiesExtractor implements AuthoritiesExtractor {
 	@Value("${app.roles.claim:member_of}")
 	private String rolesClaim;
 
+	@Value("${app.roles.admin:ADMIN}")
+	private String adminRole;
+
 	@Override
 	public List<GrantedAuthority> extractAuthorities(Map<String, Object> map) {
 		logger.debug("Received map: {}", map);
@@ -32,6 +35,7 @@ public class OAuthAuthoritiesExtractor implements AuthoritiesExtractor {
 	private List<GrantedAuthority> readUserGroups(Map<String, Object> userData) {
 		Pattern groupPattern = Pattern.compile(this.rolesRegex);
 		List<String> authorities = new ArrayList<>();
+		logger.debug("Trying to extract user roles in claim [{}]from token recieved", this.rolesClaim);
 		Object memberOf = userData.get(this.rolesClaim);
 		if( memberOf != null) {
 			List<String> userGroups = new ArrayList<String>();
@@ -48,6 +52,9 @@ public class OAuthAuthoritiesExtractor implements AuthoritiesExtractor {
 				if(matcher.find()) {
 					logger.debug("Adding role: {}", matcher.group(1));
 					authorities.add( "ROLE_" + matcher.group(1).toUpperCase() );
+					if(matcher.group(1).equalsIgnoreCase( this.adminRole )) {
+						authorities.add("ROLE_ADMIN");
+					}
 				}
 				else {
 					logger.debug("Skipped group: {}", userGroup);

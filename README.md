@@ -56,6 +56,12 @@ Sample data:
         "role-1"
       ],
       "target": "target"
-    }, 
+    } 
  ]
 ```
+
+
+### Loading properties from external file
+You can store launcher properties in an external file and then reference this file when running spring-boot:
+
+    mvn spring-boot:run -Dspring.config.location=/var/opt/identicum/launcher/application.properties

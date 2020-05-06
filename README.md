@@ -22,6 +22,40 @@ To build and run the code, in the folder where you cloned the repository, run:
 
     mvn spring-boot:run
 
+To override some properties add them to the command line:
+
+    mvn spring-boot:run -Dspring-boot.run.arguments="--app.homedir=/var/opt/identicum/launcher"
+
 ### Docker
 The app can run a as Docker container.
 Dockerfile and instructions documented [here](docker/)
+
+## Initial dataset
+When the app starts and there is no data, it tries to find a file with initial dataset under `${app.homedir}/data.json`
+
+The default value for `${app.homedir}` is `/var/opt/identicum/launcher`. Remember you can also override this property value at runtime.
+
+Sample data:
+```json
+[
+    {
+      "color": "#ff0000",
+      "display": "Display 1",
+      "icon": "fa fa-launcher",
+      "roleNames": [
+        "role-1",
+        "role-2"
+      ],
+      "target": "target"
+    }, 
+    {
+      "color": "#ff0000",
+      "display": "Display 2",
+      "icon": "fa fa-launcher",
+      "roleNames": [
+        "role-1"
+      ],
+      "target": "target"
+    }, 
+ ]
+```

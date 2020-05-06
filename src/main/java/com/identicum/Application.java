@@ -11,6 +11,8 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509ExtendedTrustManager;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,11 +30,17 @@ public class Application extends SpringBootServletInitializer {
     public static void main(String[] args)
     {
     	logger.info("Starting Launcher");
-
         disableSSLValidation();
         SpringApplication.run(Application.class, args);
     }
-    
+
+    @Override
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        logger.debug("Called onStartup");
+        disableSSLValidation();
+        super.onStartup(servletContext);
+    }
+
     private static void disableSSLValidation()
     {
         TrustManager[] trustAllCerts = new TrustManager[]{

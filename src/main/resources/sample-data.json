@@ -1,0 +1,12 @@
+[
+    {
+      "color": "#ff0000",
+      "display": "Display",
+      "icon": "fa fa-launcher",
+      "roleNames": [
+        "role-1",
+        "role-2"
+      ],
+      "target": "target"
+    }
+  ]

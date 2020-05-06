@@ -3,15 +3,7 @@ package com.identicum.models;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -32,7 +24,10 @@ public class Link {
 	@JoinColumn(name = "link_id")
 	@OrderBy("name asc")
     private Set<Role> roles = new HashSet<>();
-	
+
+	@Transient
+	private Set<String> roleNames = new HashSet<>();
+
 	public Long getId() {
 		return id;
 	}
@@ -88,5 +83,13 @@ public class Link {
 
 	public void setDisplay(String display) {
 		this.display = display;
+	}
+
+	public Set<String> getRoleNames() {
+		return roleNames;
+	}
+
+	public void setRoleNames(Set<String> roleNames) {
+		this.roleNames = roleNames;
 	}
 }

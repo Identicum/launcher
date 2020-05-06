@@ -27,7 +27,8 @@ public class Application extends SpringBootServletInitializer {
 
     public static void main(String[] args)
     {
-    	logger.info("Starting app Oauth2 app");
+    	logger.info("Starting Launcher");
+
         disableSSLValidation();
         SpringApplication.run(Application.class, args);
     }

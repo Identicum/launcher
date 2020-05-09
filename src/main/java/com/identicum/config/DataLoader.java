@@ -24,7 +24,7 @@ public class DataLoader  implements ApplicationRunner {
     private LinkRepository linkRepository;
     private RoleRepository roleRepository;
 
-    @Value("${app.homedir}")
+    @Value("${app.homedir:/var/opt/identicum/launcher}")
     private String appHomedir;
 
     @Autowired

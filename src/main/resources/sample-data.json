@@ -1,12 +1,16 @@
-[
+{
+  "links": [
     {
-      "color": "#ff0000",
-      "display": "Display",
-      "icon": "fa fa-launcher",
-      "roleNames": [
-        "role-1",
-        "role-2"
-      ],
-      "target": "target"
+      "color": "#666666",
+      "display": "Identicum",
+      "icon": "fas fa-info",
+      "target": "https://www.identicum.com",
+      "roles": [
+        {
+          "id": 1,
+          "name": "PUBLIC"
+        }
+      ]
     }
   ]
+}

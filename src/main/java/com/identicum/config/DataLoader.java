@@ -1,13 +1,9 @@
 package com.identicum.config;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.identicum.Application;
-import com.identicum.models.Link;
-import com.identicum.models.Role;
 import com.identicum.services.LinkRepository;
 import com.identicum.services.RoleRepository;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +12,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.List;
+import java.io.*;
 
 @Component
 public class DataLoader  implements ApplicationRunner {
@@ -48,21 +41,10 @@ public class DataLoader  implements ApplicationRunner {
             if(initialData.exists() && initialData.canRead()) {
                 logger.debug("An initial datafile has benn found and it's readable");
                 try {
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    List<Link> links = objectMapper.readValue(initialData, new TypeReference<List<Link>>() {});
-                    links.forEach(link -> {
-                        logger.debug("Loading link: {}", link.getDisplay());
-                        linkRepository.save(link);
-                        link.getRoleNames().forEach(roleName -> {
-                            logger.debug("Loading role {} for link: {}", roleName, link.getDisplay());
-                            Role role = new Role();
-                            role.setName(roleName);
-                            role.setLink(link);
-                            roleRepository.save(role);
-                        });
-                    });
-                } catch (Exception e) {
-                    logger.error("Error serializing link", e);
+                    this.importData(new FileInputStream(initialData));
+                }
+                catch(FileNotFoundException fne) {
+                    logger.error("It should not happen because file presence is checked before", fne);
                 }
             }
             else {
@@ -71,6 +53,28 @@ public class DataLoader  implements ApplicationRunner {
         }
         else{
             logger.debug("Database already filled. Skipping initial data loading.");
+        }
+    }
+
+    public void importData(InputStream data) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            ModelsDto models = objectMapper.readValue(data, ModelsDto.class);
+            models.getLinks().forEach(link -> {
+                logger.debug("Loading link: {}", link.getDisplay());
+                linkRepository.save(link);
+                link.getRoles().forEach(role -> {
+                    logger.debug("Loading role {} for link {}", role.getName(), role.getLink().getId());
+                    roleRepository.save(role);
+                });
+            });
+        } catch (Exception e) {
+            logger.error("Error reading links from json", e);
+        }
+        finally {
+            try { data.close(); } catch (IOException e) {
+                logger.error("Error closing stream of import file", e);
+            }
         }
     }
 }

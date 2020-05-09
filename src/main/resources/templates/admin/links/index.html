@@ -7,7 +7,6 @@
 <body style="padding-top: 70px">
 	<div th:replace="fragments/menu :: top"></div>
 	<div class="container">
-		
 		<div th:switch="${links}">
     		<h2 th:case="null">No links yet!</h2>
 	        <div th:case="*">

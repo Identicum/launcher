@@ -1,15 +1,14 @@
 package com.identicum.models;
 
+import com.fasterxml.jackson.annotation.*;
+
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Role implements Serializable {
 	
 	private static final long serialVersionUID = 3566048646415017879L;
@@ -22,6 +21,8 @@ public class Role implements Serializable {
 	private String name;
 	
 	@ManyToOne
+	@JoinColumn
+	@JsonBackReference
 	private Link link;
 	
 	public Long getId() {
@@ -31,7 +32,7 @@ public class Role implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	public Link getLink() {
 		return link;
 	}

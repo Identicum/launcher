@@ -23,8 +23,17 @@
 			    	<span th:if="${#fields.hasErrors('target')}" th:errors="*{target}"></span>
 			    </div>
 			    <div class="form-group">
-			    	<label for="icon">Icon</label>
-			    	<input type="text" th:field="*{icon}" id="icon" placeholder="Icon..." class="form-control">
+				    <label for="icon">Icon</label>
+						<div class="input-group">
+				      <span class="input-group-prepend">
+						    <a class="input-group-text"
+						       href="https://fontawesome.com/icons?d=gallery&m=free"
+						       target="_new"
+						       style="width: 42px; padding-left: 17px"
+						       title="Click here to see all available icons"><i class="fas fa-info"></i></a>
+				      </span>
+				      <input type="text" th:field="*{icon}" id="icon" placeholder="Icon..." class="form-control">
+			      </div>
 			    	<span th:if="${#fields.hasErrors('icon')}" th:errors="*{icon}"></span>
 			    </div>
 			    <div class="form-group">
@@ -38,7 +47,8 @@
 					<span th:if="${#fields.hasErrors('color')}" th:errors="*{color}"></span>			    	
 			    </div>
 			    <div class="form-group">
-			    	<input type="submit" value="Save" class="btn btn-success">
+			      <button type="submit" class="btn btn-secondary"><i class="fas fa-check"></i> Save</button>
+				    <a class="btn btn-secondary" th:href="@{/admin/links}"><i class="fas fa-arrow-left"></i> Volver</a>
 			    </div>   
 			</form>
 

@@ -1,23 +1,29 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 	<head>
 		<div th:replace="fragments/header :: header"></div>
-    	<title>Application Launcher</title>
+		<title>Application Launcher</title>
+		<script sec:authorize="hasAuthority('ROLE_ADMIN')" th:src="@{/resources/js/jquery.ui.widget.js}"></script>
+		<script sec:authorize="hasAuthority('ROLE_ADMIN')" th:src="@{/resources/js/jquery.iframe-transport.js}"></script>
+		<script sec:authorize="hasAuthority('ROLE_ADMIN')" th:src="@{/resources/js/jquery.fileupload.js}"></script>
 	</head>
 	<body style="padding-top: 70px">
 		<div th:replace="fragments/menu :: top"></div>
 		<div class="container">
-			<ul class="list-inline">
-				<li th:each="link : ${links}" class="list-inline-item link">
-					<a th:href="${link.target}" target="_blank">
-						<div class="icon text-center" th:style="${'color: ' + link.color}">
-							<i th:class="${'fa-2x ' + link.icon}"></i>
-						</div>
-						<div class="display text-center" th:text="${link.display}"></div>
-					</a>
-				</li>
-			</ul>
+			<div class="row">
+				<div th:each="link : ${links}" class="col-6 col-sm-4 col-md-2">
+					<div class="link">
+						<a th:href="${link.target}" target="_blank">
+							<div class="icon text-center" th:style="${'color: ' + link.color}">
+								<i th:class="${'fa-2x ' + link.icon}"></i>
+							</div>
+							<div class="display text-center" th:text="${link.display}"></div>
+						</a>
+					</div>
+				</div>
+			</div>
 		</div>
+		<div th:replace="fragments/footer :: footer"></div>
 		<style>
 		
 			li.link {
@@ -27,10 +33,10 @@
 			.link a {
 				background-color: whitesmoke;
 				display: block;
-				width: 112px;
 				padding-bottom: 10px;
 				border-radius: 6px;
-				margin-bottom: 10px;
+				margin: 15px 0px;
+				box-shadow: 0px 2px 5px -1px rgba(0,0,0,0.2);
 			}
 
 			.link a i {
@@ -58,5 +64,15 @@
 				color: #fff !important;
 			}
 		</style>
+		<script sec:authorize="hasAuthority('ROLE_ADMIN')">
+			$(function () {
+			  $('#fileupload').fileupload({
+			      dataType: 'json',
+			      done: function (e, data) {
+			        location.reload();
+			      }
+			  });
+			});
+		</script>
 	</body>
 </html>

@@ -15,8 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.identicum.models.Link;
 import com.identicum.services.LinkRepository;
 
@@ -28,20 +26,10 @@ public class IndexController {
 	@Autowired
     LinkRepository linkRepository;
 
-	@GetMapping("/welcome")
-	public String welcome() {
-		return "welcome";
-	}
-
 	@SuppressWarnings("unchecked")
 	@GetMapping({"", "/", "/menu"})
 	public String launchpad(Model model, OAuth2Authentication auth ) {
 
-    	try {
-    		logger.debug("Spring auth: " + new ObjectMapper().writeValueAsString(auth));
-    	} catch(JsonProcessingException jpe) {
-
-    	}
 		Map<String, Object> details = (HashMap<String, Object>)auth.getUserAuthentication().getDetails();
     	logger.debug("User details --> {}", details);
 
@@ -57,11 +45,11 @@ public class IndexController {
         		links = linkRepository.getLinksByRoles( Arrays.asList( details.get("member_of").toString() ));
         	}
         }
-			String userName = details.get("given_name") + " " + details.get("family_name");
+    	String userName = details.get("given_name") + " " + details.get("family_name");
     	logger.debug("Total links found for {}: {}", userName, links);
-			model.addAttribute("links", links);
-			logger.debug("User attrs: given_name({}) - family_name({}) - userName({})", details.get("given_name"), details.get("family_name"), userName);
+		model.addAttribute("links", links);
+		logger.debug("User attrs: given_name({}) - family_name({}) - userName({})", details.get("given_name"), details.get("family_name"), userName);
     	model.addAttribute("name", userName);
-			return "launcher";
+		return "launcher";
 	}
 }

@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -36,5 +35,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 	.invalidateHttpSession(true)
 					.logoutSuccessUrl(end_session_uri+"?post_logout_redirect_uri="+post_logout_uri);
 	}
-
 }

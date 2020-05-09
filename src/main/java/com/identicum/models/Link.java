@@ -1,15 +1,19 @@
 package com.identicum.models;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 
 @Entity
-public class Link {
-	
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+public class Link implements Serializable {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -19,14 +23,12 @@ public class Link {
 	private String target;
 	private String type;
 	private String display;
-	
+
+	@JsonManagedReference
 	@OneToMany(cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "link_id")
 	@OrderBy("name asc")
-    private Set<Role> roles = new HashSet<>();
-
-	@Transient
-	private Set<String> roleNames = new HashSet<>();
+	private List<Role> roles = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -60,12 +62,11 @@ public class Link {
 		this.type = type;
 	}
 
-	@JsonIgnore
-	public Set<Role> getRoles() {
+	public List<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Set<Role> roles) {
+	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
 
@@ -85,11 +86,4 @@ public class Link {
 		this.display = display;
 	}
 
-	public Set<String> getRoleNames() {
-		return roleNames;
-	}
-
-	public void setRoleNames(Set<String> roleNames) {
-		this.roleNames = roleNames;
-	}
 }

@@ -2,20 +2,10 @@ package com.identicum.controllers;
 
 import javax.validation.Valid;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.Version;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.identicum.config.DataLoader;
-import com.identicum.config.LinkExportSerializer;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.identicum.config.ModelsDto;
 import com.identicum.services.RoleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,10 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.identicum.models.Link;
 import com.identicum.services.LinkRepository;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.util.Arrays;
 
 @Controller
 @RequestMapping("/admin/links")

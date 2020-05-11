@@ -6,5 +6,11 @@ RUN mkdir src
 COPY src ./src
 RUN mvn clean package
 
+# ############################################################################
+# Build runtime image
+FROM identicum/centos-java:latest
+
+WORKDIR /app
+COPY --from=build-env /workspace/app/target/launcher.jar .
 EXPOSE 8080
-CMD ["mvn", "spring-boot:run"]
+CMD ["sh", "-c", "java -jar launcher.jar $APP_PARAMETERS"]

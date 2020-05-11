@@ -5,7 +5,7 @@
 	<groupId>com.identicum.apps</groupId>
 	<artifactId>launcher</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>Application Launcher</name>
 	<description>Application launcher based on user roles</description>
 
@@ -135,19 +135,6 @@
 							</includes>
 						</resource>
 					</webResources>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.2</version>
-				<configuration>
-					<!-- 
-					<server>localhost</server>
-					<url>http://localhost:8080/manager/text</url> 
-					-->
-					<server>demo-apps-java</server>
-					<url>http://dockerdesa.identicum.com:8003/manager/text</url>
 				</configuration>
 			</plugin>
 			<plugin>

@@ -8,7 +8,7 @@ RUN mvn clean package
 
 # ############################################################################
 # Build runtime image
-FROM identicum/centos-java:latest
+FROM openjdk:8-jdk-alpine
 
 WORKDIR /app
 COPY --from=build-env /workspace/app/target/launcher.jar .

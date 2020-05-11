@@ -1,4 +1,28 @@
 <th:block th:fragment="footer">
+	<script>
+		$(function () {
+		  $('#search').autocomplete({
+	      serviceUrl: '[[@{/links/search}]]',
+	      dataType: "json",
+	      deferRequestBy: 200,
+	      noCache: true,
+	      width: 600,
+	      onSelect: function(suggestion){
+	        this.value = "";
+	        var win = window.open(suggestion.data, '_blank');
+	        win.focus();
+	        this.blur();
+	      },
+	      transformResult: function(response) {
+	        return {
+	            suggestions: $.map(response, function(dataItem) {
+	                return { value: dataItem.display, data: dataItem.target };
+	            })
+	        };
+	      }
+		  });
+		});
+	</script>
 	<footer class="text-center">
 		<a href="https://www.identicum.com">&copy; Identicum</a> |
 		<a href="https://github.com/identicum/launcher"><i class="fab fa-github"></i> Github</a>

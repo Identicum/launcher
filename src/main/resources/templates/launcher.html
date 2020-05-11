@@ -25,7 +25,6 @@
 		</div>
 		<div th:replace="fragments/footer :: footer"></div>
 		<style>
-		
 			li.link {
 				float: left;
 			}
@@ -67,10 +66,10 @@
 		<script sec:authorize="hasAuthority('ROLE_ADMIN')">
 			$(function () {
 			  $('#fileupload').fileupload({
-			      dataType: 'json',
-			      done: function (e, data) {
-			        location.reload();
-			      }
+		      dataType: 'json',
+		      done: function (e, data) {
+		        location.reload();
+		      }
 			  });
 			});
 		</script>

@@ -25,6 +25,37 @@ body {
   margin-right: 10px;
 }
 
+.navbar-nav input#search {
+	border: none;
+  background-color: #575c61;
+  color: #ccc;
+  width: 300px;
+  }
+}
+
+input#search::-webkit-input-placeholder {
+    color: #aaaaaa;
+}
+
+input#search::-moz-placeholder {
+    color: #aaaaaa;
+}
+
+input#search::-ms-placeholder {
+    color: #aaaaaa;
+}
+
+input#search::placeholder {
+    color: #aaaaaa;
+}
+
+.autocomplete-suggestions { border: none; background: whitesmoke; overflow: auto; box-shadow: 0px 2px 5px -1px rgba(0,0,0,0.2); }
+.autocomplete-suggestion { padding: 10px; color: #666; white-space: nowrap; overflow: hidden; cursor: pointer; }
+.autocomplete-selected { background: #F0F0F0; }
+.autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }
+.autocomplete-group { padding: 2px 5px; }
+.autocomplete-group strong { display: block; border-bottom: 1px solid #000; }
+
 footer {
 	bottom: 0;
 	position: fixed;

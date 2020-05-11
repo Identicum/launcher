@@ -1,20 +1,19 @@
 package com.identicum.config;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.identicum.models.Link;
 
 import java.io.IOException;
 
-public class LinkExportSerializer extends StdSerializer<Link> {
+public class LinkSimpleSerializer extends StdSerializer<Link> {
 
-    public LinkExportSerializer() {
+    public LinkSimpleSerializer() {
         this(null);
     }
 
-    public LinkExportSerializer(Class<Link> t) {
+    public LinkSimpleSerializer(Class<Link> t) {
         super(t);
     }
 
@@ -26,15 +25,6 @@ public class LinkExportSerializer extends StdSerializer<Link> {
         jsonGenerator.writeStringField("icon", link.getIcon());
         jsonGenerator.writeStringField("target", link.getTarget());
         jsonGenerator.writeStringField("type", link.getType());
-        jsonGenerator.writeArrayFieldStart("roleNames");
-        link.getRoles().forEach(role -> {
-            try {
-                jsonGenerator.writeString(role.getName());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-        jsonGenerator.writeEndArray();
         jsonGenerator.writeEndObject();
     }
 }

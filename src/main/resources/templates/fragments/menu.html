@@ -11,11 +11,13 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarText">
-			<ul class="navbar-nav mr-auto"></ul>
+			<ul class="navbar-nav ml-auto mr-auto">
+				<li class="nav-item"><input class="form-control mr-sm-4" type="text" id="search" placeholder="Search links here..." aria-label="Search" autocomplete="off"></li>
+			</ul>
 			<ul class="navbar-nav my-2 my-lg-0 navbar-dark bg-dark">
 				<li class="nav-item dropdown">
 				  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<i class="fas fa-user-circle fa-fw"></i> <span th:text="${#authentication.name}"></span>
+						<i class="fas fa-user-circle fa-fw"></i> <span th:text="${#authentication.name}"></span>
 				  </a>
 				  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 					<a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" th:href="@{/admin/links}">Manage links</a>

@@ -14,8 +14,14 @@ To create the war file, go to the folder where you cloned the repository and run
 
 ## Run
 
-### WAR
-To execute in a web container like Tomcat, simply copy the file to the webapps folder or deploy to your application server following standard procedures.
+### JAR
+It runs as a JAR application
+
+    java -jar launcher.jar
+    
+To override some properties add them to the command line:
+
+    java -jar launcher.jar --server.port=8081
 
 ### Spring Boot
 To build and run the code, in the folder where you cloned the repository, run:
@@ -36,7 +42,7 @@ When the app starts and there is no data, it tries to find a file with initial d
 The default value for `${app.homedir}` is `/var/opt/identicum/launcher`. Remember you can also override this property value at runtime.
 
 ### Loading properties from external file
-You can store launcher properties in an external file and then reference this file when running spring-boot:
+You can store launcher properties in an external file and then reference this file with environment variable before starting the application:
 
     export SPRING_CONFIG_ADDITIONAL_LOCATION=/var/opt/identicum/launcher/customer.properties
-    mvn spring-boot:run
+    java -jar launcher.jar

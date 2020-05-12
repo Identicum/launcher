@@ -3,9 +3,9 @@
 	<head>
 		<div th:replace="fragments/header :: header"></div>
 		<title>Application Launcher</title>
-		<script sec:authorize="hasAuthority('ROLE_ADMIN')" th:src="@{/resources/js/jquery.ui.widget.js}"></script>
-		<script sec:authorize="hasAuthority('ROLE_ADMIN')" th:src="@{/resources/js/jquery.iframe-transport.js}"></script>
-		<script sec:authorize="hasAuthority('ROLE_ADMIN')" th:src="@{/resources/js/jquery.fileupload.js}"></script>
+		<script sec:authorize="hasAuthority('ROLE_ADMIN')" th:src="@{/js/jquery.ui.widget.js}"></script>
+		<script sec:authorize="hasAuthority('ROLE_ADMIN')" th:src="@{/js/jquery.iframe-transport.js}"></script>
+		<script sec:authorize="hasAuthority('ROLE_ADMIN')" th:src="@{/js/jquery.fileupload.js}"></script>
 	</head>
 	<body style="padding-top: 70px">
 		<div th:replace="fragments/menu :: top"></div>

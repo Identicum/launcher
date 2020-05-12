@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     	http.headers().frameOptions().disable();
         http.csrf().disable()
             .authorizeRequests()
-        		.antMatchers("/welcome", "/webjars/**", "/css/**").permitAll()
+        		.antMatchers("/webjars/**", "/css/**", "/fonts/**", "/imgs/**", "/js/**").permitAll()
                 .anyRequest().authenticated()
                 .and().logout()
                 	.logoutUrl("/logout")

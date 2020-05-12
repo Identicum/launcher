@@ -3,7 +3,7 @@
 <head>
     <div th:replace="fragments/header :: header"></div>
     <title>App Launcher - Links</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/resources/css/bootstrap-colorpicker.min.css}"></link>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-colorpicker.min.css}"></link>
 </head>
 <body style="padding-top: 70px">
 	<div th:replace="fragments/menu :: top"></div>
@@ -48,12 +48,12 @@
 			    </div>
 			    <div class="form-group">
 			      <button type="submit" class="btn btn-secondary"><i class="fas fa-check"></i> Save</button>
-				    <a class="btn btn-secondary" th:href="@{/admin/links}"><i class="fas fa-arrow-left"></i> Volver</a>
+				    <a class="btn btn-secondary" th:href="@{/admin/links}"><i class="fas fa-arrow-left"></i> Back</a>
 			    </div>   
 			</form>
 
 	</div>
-	<script th:src="@{/resources/js/bootstrap-colorpicker.min.js}"></script>
+	<script th:src="@{/js/bootstrap-colorpicker.min.js}"></script>
 	<script>
 	$(function () {
 		$("#cp1").colorpicker({format: "hex"});

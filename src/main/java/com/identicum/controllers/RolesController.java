@@ -32,7 +32,7 @@ public class RolesController {
 	@Autowired
     RoleRepository roleRepository;
 	
-	private final static String VIEWS_BASE = "/admin/roles";
+	private final static String VIEWS_BASE = "admin/roles";
 	
 	@GetMapping({"", "/"})
 	public String index(@PathVariable("linkId") long linkId, Model model) {

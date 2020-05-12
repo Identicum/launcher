@@ -28,7 +28,7 @@ public class LinksController {
 	@Autowired
 	RoleRepository roleRepository;
 
-	private final static String VIEWS_BASE = "/admin/links";
+	private final static String VIEWS_BASE = "admin/links";
 
 	@GetMapping({"","/"})
     public String index(Model model) {

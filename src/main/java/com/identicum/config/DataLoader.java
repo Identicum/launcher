@@ -39,7 +39,7 @@ public class DataLoader  implements ApplicationRunner {
             File initialData = new File(this.appHomedir + File.separator + DATA_FILENAME);
             logger.debug("Repository is empty. Trying to find initial data in file {}", initialData);
             if(initialData.exists() && initialData.canRead()) {
-                logger.debug("An initial datafile has benn found and it's readable");
+                logger.debug("An initial datafile has been found and it's readable");
                 try {
                     this.importData(new FileInputStream(initialData));
                 }

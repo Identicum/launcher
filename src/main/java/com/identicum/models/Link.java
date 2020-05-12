@@ -25,7 +25,7 @@ public class Link implements Serializable {
 	private String display;
 
 	@JsonManagedReference
-	@OneToMany(cascade = CascadeType.REMOVE)
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "link_id")
 	@OrderBy("name asc")
 	private List<Role> roles = new ArrayList<>();

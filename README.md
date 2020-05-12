@@ -38,4 +38,5 @@ The default value for `${app.homedir}` is `/var/opt/identicum/launcher`. Remembe
 ### Loading properties from external file
 You can store launcher properties in an external file and then reference this file when running spring-boot:
 
-    mvn spring-boot:run -Dspring.config.location=/var/opt/identicum/launcher/application.properties
+    export SPRING_CONFIG_ADDITIONAL_LOCATION=/var/opt/identicum/launcher/customer.properties
+    mvn spring-boot:run

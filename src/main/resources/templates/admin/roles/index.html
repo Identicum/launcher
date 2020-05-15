@@ -4,23 +4,23 @@
 		<div th:replace="fragments/header :: header"></div>
 		<title>App Launcher - Links</title>
 	</head>
-	<body style="padding-top: 70px">
-		<div th:replace="fragments/menu :: top"></div>
-		<div class="container">
+	<body>
+		<div class="container h-100">
+			<div th:replace="fragments/menu :: top"></div>
 			<div th:switch="${roles}">
 				<div th:case="null">
 					<div class="float-right btn-group" role="group" aria-label="Basic example">
 						<a class="btn btn-primary" th:href="@{/admin/links}"><i class="fas fa-long-arrow-alt-left fa-fw"></i> Back</a>
 						<a class="btn btn-primary" th:href="@{/admin/links/{id}/roles/new(id=${link.id})}"><i class="fas fa-plus fa-fw"></i> Add a new role</a>
 					</div>
-					<h2>No roles yet!</h2>
+					<div class="page-title">No roles yet!</div>
 				</div>
 				<div th:case="*">
 					<div class="float-right btn-group" role="group" aria-label="Basic example">
 						<a class="btn btn-primary" th:href="@{/admin/links}"><i class="fas fa-long-arrow-alt-left fa-fw"></i> Back</a>
 						<a class="btn btn-primary" th:href="@{/admin/links/{id}/roles/new(id=${link.id})}"><i class="fas fa-plus fa-fw"></i> Add a new role</a>
 					</div>
-					<h2>Roles for link [[${link.display}]]</h2>
+					<div class="page-title">Roles for link [[${link.display}]]</div>
 					<table class="table">
 						<thead>
 							<tr>
@@ -40,6 +40,7 @@
 					</table>
 				</div>
 			</div>
+			<div th:replace="fragments/footer :: footer"></div>
 		</div>
 	</body>
 </html>

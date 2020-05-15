@@ -23,6 +23,12 @@
 		  });
 		});
 	</script>
+	<style>
+		body {
+			background: [[${@environment.getProperty('app.style.background')}]];
+			background-size: [[${@environment.getProperty('app.style.background.size')}]];
+		}
+	</style>
 	<footer class="text-center">
 		<a href="https://www.identicum.com">&copy; Identicum</a> |
 		<a href="https://github.com/identicum/launcher"><i class="fab fa-github"></i> Github</a>

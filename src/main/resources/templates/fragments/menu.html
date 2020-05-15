@@ -1,34 +1,31 @@
-<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" th:fragment="top">
-	<div class="container">
-		<a class="navbar-brand" th:href="@{/}">
-			<!--<i class="fas fa-rocket fa-fw" style="color: #00ffb1"></i>-->
-			<img th:src="@{/imgs/favicon-32.png}" class="logo d-inline-block align-top" alt="">
-			App Launcher
-		</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarText" aria-controls="navbarText"
-			aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarText">
-			<ul class="navbar-nav ml-auto mr-auto">
-				<li class="nav-item"><input class="form-control mr-sm-4" type="text" id="search" placeholder="Search links here..." aria-label="Search" autocomplete="off"></li>
-			</ul>
-			<ul class="navbar-nav my-2 my-lg-0 navbar-dark bg-dark">
-				<li class="nav-item dropdown">
-				  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<i class="fas fa-user-circle fa-fw"></i> <span th:text="${#authentication.name}"></span>
-				  </a>
-				  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" th:fragment="top" style="position: absolute">
+	<a class="navbar-brand" th:href="@{/}">
+		<!--<i class="fas fa-rocket fa-fw" style="color: #00ffb1"></i>-->
+		<img th:src="@{/imgs/favicon-32.png}" class="logo d-inline-block align-top" alt="">
+		App Launcher
+	</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse"
+		data-target="#navbarText" aria-controls="navbarText"
+		aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse" id="navbarText">
+		<ul class="navbar-nav ml-auto mr-auto">
+			<li class="nav-item"><input class="form-control mr-sm-4" type="text" id="search" placeholder="Search links here..." aria-label="Search" autocomplete="off"></li>
+		</ul>
+		<ul class="navbar-nav my-2 my-lg-0 navbar-dark bg-dark">
+			<li class="nav-item dropdown">
+			  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fas fa-user-circle fa-fw"></i> <span th:text="${#authentication.name}"></span>
+			  </a>
+			  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 					<a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" th:href="@{/admin/links}">Manage links</a>
 					<a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" th:href="@{/admin/data/export}">Export data</a>
 					<a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" th:onclick="document.getElementById('fileupload').click()">Import data</a>
 					<a class="dropdown-item" href="logout"><span class="fa fa-sign-out"></span> Logout</a>
-				  </div>
-				</div>
-				</li>
-			</ul>
-			<input sec:authorize="hasRole('ROLE_ADMIN')" type="file" id="fileupload" name="importFile" th:data-url="@{/admin/data/import}" style="display:none;" />
-		</div>
+			  </div>
+			</li>
+		</ul>
+		<input sec:authorize="hasRole('ROLE_ADMIN')" type="file" id="fileupload" name="importFile" th:data-url="@{/admin/data/import}" style="display:none;" />
 	</div>
 </nav>

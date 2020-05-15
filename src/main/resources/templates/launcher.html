@@ -7,9 +7,9 @@
 		<script sec:authorize="hasAuthority('ROLE_ADMIN')" th:src="@{/js/jquery.iframe-transport.js}"></script>
 		<script sec:authorize="hasAuthority('ROLE_ADMIN')" th:src="@{/js/jquery.fileupload.js}"></script>
 	</head>
-	<body style="padding-top: 70px">
-		<div th:replace="fragments/menu :: top"></div>
-		<div class="container">
+	<body>
+		<div class="container h-100">
+			<div th:replace="fragments/menu :: top"></div>
 			<div class="row">
 				<div th:each="link : ${links}" class="col-6 col-sm-4 col-md-2">
 					<div class="link">
@@ -22,15 +22,11 @@
 					</div>
 				</div>
 			</div>
+			<div th:replace="fragments/footer :: footer"></div>
 		</div>
-		<div th:replace="fragments/footer :: footer"></div>
 		<style>
-			li.link {
-				float: left;
-			}
-		
 			.link a {
-				background-color: whitesmoke;
+				background-color: white;
 				display: block;
 				padding-bottom: 10px;
 				border-radius: 6px;

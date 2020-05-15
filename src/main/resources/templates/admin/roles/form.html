@@ -4,25 +4,23 @@
 	<div th:replace="fragments/header :: header"></div>
     <title>App Launcher - Links</title>
 </head>
-<body style="padding-top: 70px">
-	<div th:replace="fragments/menu :: top"></div>
-	
-	<div class="container">
-	
-			<h2>Role data</h2>
-			<form action="#" th:action="@{/admin/links/{linkId}/roles/{id}(linkId=${link.id}, id=${role.id == null ? '' : role.id})}" th:object="${role}" method="post">
-			    <div class="form-group">
-				    <label for="name">Name</label>
-				    <input type="text" th:field="*{name}" id="name" placeholder="Name..." class="form-control">
-				    <small id="nameHelp" class="form-text text-muted">Enter PUBLIC for access by any authenticated user</small>
-				    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-			    </div>
-			    <div class="form-group">
-				    <button type="submit" class="btn btn-secondary"><i class="fas fa-check"></i> Save</button>
-				    <a class="btn btn-secondary" th:href="@{/admin/links}"><i class="fas fa-arrow-left"></i> Back</a>
-			    </div>   
-			</form>
-
+<body>
+	<div class="container h-100">
+		<div th:replace="fragments/menu :: top"></div>
+		<div class="page-title">Role data</div>
+		<form action="#" th:action="@{/admin/links/{linkId}/roles/{id}(linkId=${link.id}, id=${role.id == null ? '' : role.id})}" th:object="${role}" method="post">
+	    <div class="form-group">
+		    <label for="name">Name</label>
+		    <input type="text" th:field="*{name}" id="name" placeholder="Name..." class="form-control">
+		    <small id="nameHelp" class="form-text text-muted">Enter PUBLIC for access by any authenticated user</small>
+		    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+	    </div>
+	    <div class="form-group">
+		    <button type="submit" class="btn btn-secondary"><i class="fas fa-check"></i> Save</button>
+		    <a class="btn btn-secondary" th:href="@{/admin/links}"><i class="fas fa-arrow-left"></i> Back</a>
+	    </div>
+		</form>
+		<div th:replace="fragments/footer :: footer"></div>
 	</div>
 </body>
 </html>

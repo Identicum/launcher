@@ -4,42 +4,43 @@
 	<div th:replace="fragments/header :: header"></div>
     <title>App Launcher - Links</title>
 </head>
-<body style="padding-top: 70px">
-	<div th:replace="fragments/menu :: top"></div>
-	<div class="container">
+<body>
+	<div class="container h-100">
+		<div th:replace="fragments/menu :: top"></div>
 		<div th:switch="${links}">
-    		<h2 th:case="null">No links yet!</h2>
-	        <div th:case="*">
-	        	<a class="float-right btn btn-primary" th:href="@{/admin/links/new}">Add a new link</a>
-	            <h2>Links administration</h2>
-	            <table class="table">
-	                <thead>
-	                    <tr>
-	                        <th>Display</th>
-	                        <th>URL</th>
-	                        <th>Icon</th>
-	                        <th class="text-center">Color</th>
-	                        <th class="text-right">Actions</th>
-	                    </tr>
-	                </thead>
-	                <tbody>
-		                <tr th:each="link : ${links}">
-		                    <td th:text="${link.display}"></td>
-		                    <td th:text="${link.target}"></td>
-		                    <td th:text="${link.icon}"></td>
-		                    <td class="text-center">
-		                    	<div class="color" th:style="${'background-color: ' + link.color}"></div>
-		                    </td>
-		                    <td class="text-right">
-		                    	<a th:href="@{/admin/links/{id}/roles(id=${link.id})}" title="Manage link roles"><i class="fas fa-shield-alt fa-fw"></i></a>
-		                    	<a th:href="@{/admin/links/{id}(id=${link.id})}" title="Edit link"><i class="fas fa-pencil-alt fa-fw"></i></a>
-		                        <a th:href="@{/admin/links/{id}/delete(id=${link.id})}" title="Delete link"><i class="fas fa-trash-alt fa-fw"></i></a>
-		                    </td>
-		                </tr>
-		            </tbody>
-		        </table>
-		    </div>      
+      <div class="page-title" th:case="null">No links yet!</div>
+      <div th:case="*">
+        <a class="float-right btn btn-primary" th:href="@{/admin/links/new}">Add a new link</a>
+        <div class="page-title">Links administration</div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Display</th>
+              <th>URL</th>
+              <th>Icon</th>
+              <th class="text-center">Color</th>
+              <th class="text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="link : ${links}">
+              <td th:text="${link.display}"></td>
+              <td th:text="${link.target}"></td>
+              <td th:text="${link.icon}"></td>
+              <td class="text-center">
+                <div class="color" th:style="${'background-color: ' + link.color}"></div>
+              </td>
+              <td class="text-right">
+                <a th:href="@{/admin/links/{id}/roles(id=${link.id})}" title="Manage link roles"><i class="fas fa-shield-alt fa-fw"></i></a>
+                <a th:href="@{/admin/links/{id}(id=${link.id})}" title="Edit link"><i class="fas fa-pencil-alt fa-fw"></i></a>
+                  <a th:href="@{/admin/links/{id}/delete(id=${link.id})}" title="Delete link"><i class="fas fa-trash-alt fa-fw"></i></a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 		</div>
+		<div th:replace="fragments/footer :: footer"></div>
 	</div>
 	<style>
 		.color {

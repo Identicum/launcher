@@ -11,8 +11,19 @@
        url('../fonts/squada-one-v8-latin-regular.svg#SquadaOne') format('svg'); /* Legacy iOS */
 }
 
+html, body {
+	height: 100%;
+}
+
 body {
-	padding-bottom: 40px;
+	background-image: url('../imgs/bg-pattern-01.png');
+	padding: 10px 0px;
+}
+
+body > .container {
+	background-color: rgb(255,255,255,0.8);
+	padding-top: 65px;
+	position: relative;
 }
 
 .navbar-brand {
@@ -58,14 +69,20 @@ input#search::placeholder {
 
 footer {
 	bottom: 0;
-	position: fixed;
+	position: absolute;
 	width: 100%;
 	font-size: 14px;
   line-height: 40px;
-  background-color: white;
-  opacity: 0.6;
+  text-align: center;
 }
 
 footer a {
-	color: #000;
+	color: #666;
+}
+
+.page-title {
+  line-height: 46px;
+  font-size: 26px;
+  font-family: "Squada One";
+  padding-left: 11px;
 }

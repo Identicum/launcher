@@ -1,4 +1,4 @@
-FROM identicum/centos-java-maven as build-env
+FROM ghcr.io/identicum/centos-java-maven as build-env
 
 WORKDIR /workspace/app
 COPY pom.xml .

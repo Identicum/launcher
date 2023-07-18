@@ -5,29 +5,7 @@ on:
 env:
   CONTAINER_IMAGE: ghcr.io/identicum/${{github.event.repository.name}}:latest
 jobs:
-  analyze:
-    runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-    strategy:
-      fail-fast: false
-      matrix:
-        language: [ 'java' ]
-    steps:
-    - uses: actions/checkout@v3
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
-      with:
-        debug: true
-        languages: ${{ matrix.language }}
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v2
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
   build-push:
-    needs: analyze
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3

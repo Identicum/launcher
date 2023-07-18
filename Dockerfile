@@ -7,7 +7,7 @@ COPY src ./src
 RUN mvn clean package
 
 # ############################################################################
-# Build runtime image
+# Runtime image
 FROM openjdk:8-jdk-alpine
 
 WORKDIR /app

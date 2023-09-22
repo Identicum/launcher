@@ -1,4 +1,4 @@
-FROM ghcr.io/identicum/centos-java-maven as build-env
+FROM ghcr.io/identicum/centos7-java11-maven as build-env
 
 WORKDIR /workspace/app
 COPY pom.xml .
@@ -7,8 +7,8 @@ COPY src ./src
 RUN mvn clean package
 
 # ############################################################################
-# Runtime image
-FROM openjdk:8-jdk-alpine
+# Build runtime image
+FROM ghcr.io/identicum/centos7-java11
 
 WORKDIR /app
 COPY --from=build-env /workspace/app/target/launcher.jar .

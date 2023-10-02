@@ -15,6 +15,6 @@ COPY --from=build-env /workspace/app/target/launcher.jar .
 EXPOSE 8080
 
 RUN apk add --no-cache curl
-HEALTHCHECK --timeout=5s CMD curl --fail http://localhost:8080/ || exit 1
+HEALTHCHECK --timeout=5s CMD curl --fail http://localhost:8080/imgs/favicon-32.png || exit 1
 
 CMD ["sh", "-c", "java -jar launcher.jar $APP_PARAMETERS"]

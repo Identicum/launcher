@@ -22,6 +22,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Value("${app.post_logout_uri}")
 	private String post_logout_uri;
+	@Value("${security.oauth2.client.client-id}")
+	private String client_id;
 
 	@Override
     public void configure(HttpSecurity http) throws Exception {
@@ -33,6 +35,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().logout()
                 	.logoutUrl("/logout")
                 	.invalidateHttpSession(true)
-					.logoutSuccessUrl(end_session_uri+"?post_logout_redirect_uri="+post_logout_uri);
+					.logoutSuccessUrl(end_session_uri+"?post_logout_redirect_uri="+post_logout_uri+"&client_id="+client_id);
 	}
 }

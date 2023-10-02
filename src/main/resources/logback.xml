@@ -10,7 +10,7 @@
 
     <logger name="org.springframework" level="error" />
     <logger name="org.springframework.security" level="error" />
-    <logger name="com.identicum" level="debug" />
+    <logger name="com.identicum" level="info" />
 
     <root level="error">
         <appender-ref ref="STDOUT" />

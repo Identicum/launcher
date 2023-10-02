@@ -32,7 +32,7 @@ public class LinksController {
 
 	@GetMapping({"","/"})
     public String index(Model model) {
-		logger.debug("Entered LinksController.index");
+		logger.trace("Entered LinksController.index");
         model.addAttribute("links", linkRepository.findAllByOrderByDisplayAsc());
         return VIEWS_BASE + "/index";
     }

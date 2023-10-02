@@ -33,7 +33,8 @@ public class IndexController {
 	public String launchpad(Model model, OAuth2Authentication auth ) {
 
 		Map<String, Object> details = (HashMap<String, Object>)auth.getUserAuthentication().getDetails();
-    	logger.debug("User details --> {}", details);
+    	logger.info("User details --> {}", details);
+		logger.info("User roles --> {}", this.getUserRoles(auth));
 
     	Set<Link> links =  linkRepository.getLinksByRoles(this.getUserRoles(auth) );
     	String userName = details.get("given_name") + " " + details.get("family_name");

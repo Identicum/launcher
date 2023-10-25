@@ -3,6 +3,7 @@ package com.identicum.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.identicum.services.LinkRepository;
 import com.identicum.services.RoleRepository;
+import com.identicum.models.Link;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
+import java.util.List;
 
 import java.io.*;
 
@@ -57,16 +59,15 @@ public class DataLoader  implements ApplicationRunner {
     }
 
     public void importData(InputStream data) {
+        logger.debug("Entered DataLoader.importData");
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             ModelsDto models = objectMapper.readValue(data, ModelsDto.class);
-            models.getLinks().forEach(link -> {
+            List<Link> links = models.getLinks();
+            links.forEach(link -> {
                 logger.debug("Loading link: {}", link.getDisplay());
                 linkRepository.save(link);
-                link.getRoles().forEach(role -> {
-                    logger.debug("Loading role {} for link {}", role.getName(), role.getLink().getId());
-                    roleRepository.save(role);
-                });
+                logger.debug("Complete link: {}", link.toString());
             });
         } catch (Exception e) {
             logger.error("Error reading links from json", e);

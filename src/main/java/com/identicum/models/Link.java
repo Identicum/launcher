@@ -86,4 +86,16 @@ public class Link implements Serializable {
 		this.display = display;
 	}
 
+	@Override
+	public String toString() {
+		return "Link{" +
+				"id=" + id +
+				", icon='" + icon + '\'' +
+				", color='" + color + '\'' +
+				", target='" + target + '\'' +
+				", type='" + type + '\'' +
+				", display='" + display + '\'' +
+				", roles=" + roles +
+				'}';
+	}
 }

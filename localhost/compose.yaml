@@ -1,0 +1,57 @@
+version: "3"
+
+services:
+    launcher:
+        container_name: launcher
+        image: ghcr.io/identicum/launcher:latest
+        # pull_policy: always
+        restart: always
+        ports:
+            - 8081:8081
+        environment:
+            - APP_PARAMETERS=--spring.config.location=/config/application.properties --logging.level.org.springframework.security=DEBUG
+        volumes:
+            - ./application.properties:/config/application.properties:ro
+            - ../target/launcher.jar:/app/launcher.jar
+    idp:
+        container_name: idp
+        image: ghcr.io/identicum/keycloak:22.0
+        pull_policy: always
+        restart: always
+        ports:
+            - 8080:8080
+        env_file:
+            - ./environment/keycloak.env
+        volumes:
+            - ./keycloak/keycloak.conf:/opt/keycloak/conf/keycloak.conf:ro
+            - ./keycloak/demorealm.json:/opt/keycloak/data/import/demorealm.json
+        command: "start-dev --import-realm"
+        depends_on:
+            db:
+                condition: service_healthy
+    db:
+        container_name: db
+        image: ghcr.io/identicum/postgres:15
+        pull_policy: always
+        restart: always
+        ports:
+            - 5432:5432
+        environment:
+            POSTGRES_PASSWORD: midpointpwd
+        volumes:
+            - ./db/init/:/docker-entrypoint-initdb.d/:ro
+    ipax:
+        container_name: ipax
+        image: ghcr.io/identicum/ipax:latest
+        pull_policy: always
+        restart: always
+        ports:
+            - 80:80
+        environment:
+            NGINX_RESOLVER: 127.0.0.11 valid=5s
+            NGINX_LOG_LEVEL: debug
+            OIDC_DISCOVERY: http://idp:8080/realms/launcher/.well-known/openid-configuration
+            OIDC_CLIENT_ID: ipax_client_id
+            OIDC_CLIENT_SECRET: ipax_client_secret
+            OIDC_SCOPE: openid profile email launcher_scope
+            OIDC_POST_LOGOUT_REDIRECT_URI: http://localhost/logoutSuccess.html

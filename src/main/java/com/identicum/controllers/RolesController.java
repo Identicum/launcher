@@ -36,7 +36,7 @@ public class RolesController {
 	
 	@GetMapping({"", "/"})
 	public String index(@PathVariable("linkId") long linkId, Model model) {
-		logger.debug("Enetered RoleController.index");
+		logger.debug("Entered RoleController.index");
 		Link link = linkRepository.findById(linkId).orElseThrow(() -> new IllegalArgumentException("Invalid link Id:" + linkId));
         model.addAttribute("link", link);
         model.addAttribute("roles", link.getRoles());
@@ -45,7 +45,7 @@ public class RolesController {
 	
 	@GetMapping("/new")
 	public String addForm(@PathVariable("linkId") long linkId, Model model, Role role) {
-		logger.debug("Enetered RoleController.addForm");
+		logger.debug("Entered RoleController.addForm");
 		Link link = linkRepository.findById(linkId).orElseThrow(() -> new IllegalArgumentException("Invalid link Id:" + linkId));
         model.addAttribute("link", link);
         model.addAttribute("action", "/admin/links/" + linkId + "/roles");
@@ -54,6 +54,7 @@ public class RolesController {
 	
 	@PostMapping({"", "/"})
     public String create(@PathVariable("linkId") long linkId, @Valid Role role, BindingResult result, Model model) {
+        logger.debug("Entered RoleController.create");
         if (result.hasErrors()) {
             return VIEWS_BASE + "/form";
         }
@@ -68,7 +69,7 @@ public class RolesController {
 	
 	@GetMapping("/{id}")
 	public String editForm(@PathVariable("linkId") long linkId, @PathVariable("id") long id, Model model) {
-		logger.debug("Enetered RolesController.editForm");
+		logger.debug("Entered RolesController.editForm");
 		Role role = roleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid role Id:" + id));
         model.addAttribute("link", role.getLink());
         model.addAttribute("role", role);
@@ -78,6 +79,7 @@ public class RolesController {
 	
 	@PostMapping({"/{id}"})
     public String update(@PathVariable("linkId") long linkId, @PathVariable("id") long id, @Valid Role role, BindingResult result, Model model) {
+        logger.debug("Entered RoleController.update");
 		Link link = linkRepository.findById(linkId).orElseThrow(() -> new IllegalArgumentException("Invalid link Id:" + linkId));
 		role.setLink(link);
 		if (result.hasErrors()) {
@@ -91,7 +93,7 @@ public class RolesController {
 	
 	@GetMapping("/{id}/delete")
 	public String delete(@PathVariable("linkId") long linkId, @PathVariable("id") long id, Model model) {
-		logger.debug("Enetered RolesController.delete");
+		logger.debug("Entered RolesController.delete");
 		Role role = roleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid role Id:" + id));
 	    roleRepository.delete(role);
 	    Link link = linkRepository.findById(linkId).orElseThrow(() -> new IllegalArgumentException("Invalid link Id:" + linkId));

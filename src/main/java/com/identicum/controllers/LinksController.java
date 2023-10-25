@@ -39,11 +39,13 @@ public class LinksController {
 
 	@GetMapping("/new")
     public String addForm(Link link) {
+		logger.trace("Entered LinksController.addForm");
         return "admin/links/form";
     }
 
 	@PostMapping({"","/"})
     public String create(@Valid Link link, BindingResult result, Model model) {
+		logger.trace("Entered LinksController.create");
         if (result.hasErrors()) {
             return VIEWS_BASE + "/form";
         }
@@ -55,6 +57,7 @@ public class LinksController {
 
 	@GetMapping("/{id}")
 	public String editForm(@PathVariable("id") long id, Model model) {
+		logger.trace("Entered LinksController.editForm");
 	    Link link = linkRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid link Id:" + id));
 	    model.addAttribute("link", link);
 	    return VIEWS_BASE + "/form";
@@ -62,6 +65,7 @@ public class LinksController {
 
 	@PostMapping("/{id}")
 	public String update(@PathVariable("id") long id, @Valid Link link, BindingResult result, Model model) {
+		logger.trace("Entered LinksController.update");
 	    if (result.hasErrors()) {
 	        link.setId(id);
 	        return VIEWS_BASE + "/form";
@@ -76,6 +80,7 @@ public class LinksController {
 
 	@GetMapping("/{id}/delete")
 	public String delete(@PathVariable("id") long id, Model model) {
+		logger.trace("Entered LinksController.delete");
 	    Link link = linkRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid link Id:" + id));
 	    linkRepository.delete(link);
 	    model.addAttribute("links", linkRepository.findAllByOrderByDisplayAsc());

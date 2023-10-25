@@ -34,6 +34,7 @@ public class DataController {
 
     @GetMapping("/export")
     public ResponseEntity<ModelsDto> export() {
+        logger.debug("Entered DataController.export");
         ModelsDto models = new ModelsDto();
         linkRepository.findAll().forEach(link -> models.getLinks().add(link));
         return ResponseEntity.ok().body(models);
@@ -41,6 +42,7 @@ public class DataController {
 
     @PostMapping("/import")
     public ResponseEntity<String> importJson(@RequestParam("importFile") MultipartFile file, RedirectAttributes redirectAttributes) throws IOException {
+        logger.debug("Entered DataController.importJson");
         logger.debug("Trying to read json data");
         DataLoader loader = new DataLoader(this.linkRepository, this.roleRepository);
         loader.importData(file.getInputStream());

@@ -31,7 +31,7 @@ public class IndexController {
 	@SuppressWarnings("unchecked")
 	@GetMapping({"", "/", "/menu"})
 	public String launchpad(Model model, OAuth2Authentication auth ) {
-
+		logger.debug("Entered IndexController.launchpad");
 		Map<String, Object> details = (HashMap<String, Object>)auth.getUserAuthentication().getDetails();
     	logger.info("User details --> {}", details);
 		logger.info("User roles --> {}", this.getUserRoles(auth));
@@ -61,6 +61,7 @@ public class IndexController {
 	}
 
 	private List<String> getUserRoles(OAuth2Authentication auth) {
+		logger.debug("Entered IndexController.getUserRoles");
 		Map<String, Object> details = (HashMap<String, Object>)auth.getUserAuthentication().getDetails();
 		logger.debug("User details --> {}", details);
 		if( details.containsKey("member_of")) {

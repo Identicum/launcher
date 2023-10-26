@@ -4,7 +4,7 @@ services:
     launcher:
         container_name: launcher
         image: ghcr.io/identicum/launcher:latest
-        # pull_policy: always
+        pull_policy: always
         restart: always
         ports:
             - 8081:8081
@@ -12,7 +12,10 @@ services:
             - APP_PARAMETERS=--spring.config.location=/config/application.properties --logging.level.org.springframework.security=DEBUG
         volumes:
             - ./application.properties:/config/application.properties:ro
-            - ../target/launcher.jar:/app/launcher.jar
+            # - ../target/launcher.jar:/app/launcher.jar
+        depends_on:
+            - idp:
+                condition: service_healthy
     idp:
         container_name: idp
         image: ghcr.io/identicum/keycloak:22.0

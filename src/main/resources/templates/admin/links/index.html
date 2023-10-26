@@ -5,7 +5,7 @@
     <title>App Launcher - Links</title>
 </head>
 <body>
-  <div class="container d-flex min-vh-95 flex-column">
+  <div class="container d-flex flex-column" style="min-height: 98vh;">
 		<div th:replace="fragments/menu :: top"></div>
 		<div th:switch="${links}">
       <div class="page-title" th:case="null">No links yet!</div>

@@ -5,14 +5,14 @@
     <title>App Launcher - Links</title>
 </head>
 <body>
-	<div class="container h-100">
+  <div class="container d-flex min-vh-95 flex-column">
 		<div th:replace="fragments/menu :: top"></div>
 		<div th:switch="${links}">
       <div class="page-title" th:case="null">No links yet!</div>
       <div th:case="*">
         <a class="float-right btn btn-primary" th:href="@{/admin/links/new}">Add a new link</a>
         <div class="page-title">Links administration</div>
-        <table class="table">
+        <table class="table mb-4">
           <thead>
             <tr>
               <th>Display</th>

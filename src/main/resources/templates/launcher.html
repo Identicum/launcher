@@ -2,10 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 	<head>
 		<div th:replace="fragments/header :: header"></div>
-		<title>Application Launcher</title>
-		<script sec:authorize="hasAuthority('ROLE_ADMIN')" th:src="@{/js/jquery.ui.widget.js}"></script>
-		<script sec:authorize="hasAuthority('ROLE_ADMIN')" th:src="@{/js/jquery.iframe-transport.js}"></script>
-		<script sec:authorize="hasAuthority('ROLE_ADMIN')" th:src="@{/js/jquery.fileupload.js}"></script>
+		<title>App Launcher</title>
 	</head>
 	<body>
 		<div class="container h-100">
@@ -59,15 +56,6 @@
 				color: #fff !important;
 			}
 		</style>
-		<script sec:authorize="hasAuthority('ROLE_ADMIN')">
-			$(function () {
-			  $('#fileupload').fileupload({
-		      dataType: 'json',
-		      done: function (e, data) {
-		        location.reload();
-		      }
-			  });
-			});
-		</script>
+		<div th:replace="fragments/script :: script"></div>
 	</body>
 </html>

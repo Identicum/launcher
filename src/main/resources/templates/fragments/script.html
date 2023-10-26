@@ -1,0 +1,10 @@
+<script sec:authorize="hasAuthority('ROLE_ADMIN')">
+	$(function () {
+		$('#fileupload').fileupload({
+			dataType: 'json',
+			done: function (e, data) {
+				location.reload();
+			}
+		});
+	});
+</script>

@@ -9,4 +9,7 @@
 	<link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/5.7.2/css/all.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/css/custom.css}" />
 	<link rel="icon" th:href="@{/imgs/favicon-32.png}" sizes="32x32" />
+	<script sec:authorize="hasAuthority('ROLE_ADMIN')" th:src="@{/js/jquery.ui.widget.js}"></script>
+	<script sec:authorize="hasAuthority('ROLE_ADMIN')" th:src="@{/js/jquery.iframe-transport.js}"></script>
+	<script sec:authorize="hasAuthority('ROLE_ADMIN')" th:src="@{/js/jquery.fileupload.js}"></script>
 </th:block>	

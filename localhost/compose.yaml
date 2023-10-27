@@ -14,7 +14,7 @@ services:
             - ./application.properties:/config/application.properties:ro
             # - ../target/launcher.jar:/app/launcher.jar
         depends_on:
-            - idp:
+            idp:
                 condition: service_healthy
     idp:
         container_name: idp

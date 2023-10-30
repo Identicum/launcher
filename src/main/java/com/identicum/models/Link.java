@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.*;
 public class Link implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	private String icon;

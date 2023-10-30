@@ -17,7 +17,7 @@ import java.util.List;
 import java.io.*;
 
 @Component
-public class DataLoader  implements ApplicationRunner {
+public class DataLoader implements ApplicationRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(DataLoader.class);
 
@@ -64,10 +64,17 @@ public class DataLoader  implements ApplicationRunner {
             ObjectMapper objectMapper = new ObjectMapper();
             ModelsDto models = objectMapper.readValue(data, ModelsDto.class);
             List<Link> links = models.getLinks();
+            logger.trace("Full list of links: {}", links);
             links.forEach(link -> {
-                logger.debug("Loading link: {}", link.getDisplay());
-                linkRepository.save(link);
-                logger.debug("Complete link: {}", link.toString());
+                if (linkRepository.findByTarget(link.getTarget()).size() > 0) {
+                    logger.warn("Link with target '{}' already exists. Skipping.", link.getTarget());
+                } else {
+                    logger.debug("Trying to save link from json: {}", link);
+                    linkRepository.save(link);
+                    Link linkInDB = linkRepository.findByTarget(link.getTarget()).get(0);
+                    logger.debug("Complete link saved in database: {}", linkInDB);
+                    logger.trace("List of links in database: {}", linkRepository.findAll());
+                }
             });
         } catch (Exception e) {
             logger.error("Error reading links from json", e);

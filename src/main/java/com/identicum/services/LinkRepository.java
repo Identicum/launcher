@@ -22,4 +22,7 @@ public interface LinkRepository extends CrudRepository<Link, Long>{
 	Set<Link> getLinksByQueryAndRoles(Iterable<String> roles, String query);
 	
 	List<Link> findAllByOrderByDisplayAsc();
+	
+	@Query("SELECT l FROM Link l WHERE l.target = :target")
+	List<Link> findByTarget(String target);
 }

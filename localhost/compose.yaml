@@ -46,7 +46,7 @@ services:
             - APP_PARAMETERS=--spring.config.location=/config/application.properties --logging.level.org.springframework.security=DEBUG
         volumes:
             - ./application.properties:/config/application.properties:ro
-            # - ./data.json:/data/data.json:ro
+            - ./data.json:/data/data.json:ro
             # - ../target/launcher.jar:/app/launcher.jar
         depends_on:
             idp_config:

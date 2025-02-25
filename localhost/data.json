@@ -3,12 +3,11 @@
     {
       "icon": "fas fa-info",
       "color": "#666666",
-      "target": "https://identicum.cm/",
+      "target": "https://identicum.com/",
       "type": "html",
       "display": "Identicum",
       "roles": [
         {
-          "id": 1,
           "name": "PUBLIC"
         }
       ]
@@ -21,8 +20,7 @@
       "display": "App01",
       "roles": [
         {
-          "id": 2,
-          "name": "App01"
+          "name": "CN=App01,OU=groups,OU=meta,DC=sherpa,DC=com"
         }
       ]
     }

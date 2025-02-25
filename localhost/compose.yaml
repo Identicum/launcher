@@ -1,4 +1,40 @@
 services:
+    db:
+        container_name: db
+        image: ghcr.io/identicum/postgres:16
+        pull_policy: always
+        restart: always
+        ports:
+            - 5432:5432
+        environment:
+            POSTGRES_PASSWORD: postgrespwd
+        volumes:
+            - ./db/init/:/docker-entrypoint-initdb.d/:ro
+
+    idp:
+        container_name: idp
+        image: ghcr.io/identicum/keycloak:26.1
+        pull_policy: always
+        restart: always
+        ports:
+            - 8080:8080
+        env_file:
+            - ./keycloak.env
+        depends_on:
+            db:
+                condition: service_healthy
+
+    idp_config:
+        container_name: idp_config
+        image: ghcr.io/identicum/sherpa-deploy:latest
+        pull_policy: always
+        volumes:
+            - ./terraform/:/usr/home/
+        command: "./apply.sh"
+        depends_on:
+            idp:
+                condition: service_healthy
+
     launcher:
         container_name: launcher
         image: ghcr.io/identicum/launcher:latest
@@ -10,37 +46,12 @@ services:
             - APP_PARAMETERS=--spring.config.location=/config/application.properties --logging.level.org.springframework.security=DEBUG
         volumes:
             - ./application.properties:/config/application.properties:ro
+            # - ./data.json:/data/data.json:ro
             # - ../target/launcher.jar:/app/launcher.jar
         depends_on:
-            idp:
-                condition: service_healthy
-    idp:
-        container_name: idp
-        image: ghcr.io/identicum/keycloak:25.0
-        pull_policy: always
-        restart: always
-        ports:
-            - 8080:8080
-        env_file:
-            - ./environment/keycloak.env
-        volumes:
-            - ./keycloak/keycloak.conf:/opt/keycloak/conf/keycloak.conf:ro
-            - ./keycloak/demorealm.json:/opt/keycloak/data/import/demorealm.json
-        command: "start-dev --import-realm"
-        depends_on:
-            db:
-                condition: service_healthy
-    db:
-        container_name: db
-        image: ghcr.io/identicum/postgres:15
-        pull_policy: always
-        restart: always
-        ports:
-            - 5432:5432
-        environment:
-            POSTGRES_PASSWORD: midpointpwd
-        volumes:
-            - ./db/init/:/docker-entrypoint-initdb.d/:ro
+            idp_config:
+                condition: service_completed_successfully
+
     ipax:
         container_name: ipax
         image: ghcr.io/identicum/ipax:latest

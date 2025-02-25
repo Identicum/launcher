@@ -1,4 +1,4 @@
-FROM ghcr.io/identicum/alpine-jdk17-maven:latest as build-env
+FROM ghcr.io/identicum/alpine-jdk21-maven:latest AS build-env
 
 WORKDIR /workspace/app
 COPY pom.xml .
@@ -8,7 +8,7 @@ RUN mvn clean package
 
 # ############################################################################
 # Build runtime image
-FROM ghcr.io/identicum/alpine-jre17:latest
+FROM ghcr.io/identicum/alpine-jre21:latest
 
 WORKDIR /app
 COPY --from=build-env /workspace/app/target/launcher.jar .

@@ -1,0 +1,30 @@
+{
+  "links": [
+    {
+      "icon": "fas fa-info",
+      "color": "#666666",
+      "target": "https://identicum.cm/",
+      "type": "html",
+      "display": "Identicum",
+      "roles": [
+        {
+          "id": 1,
+          "name": "PUBLIC"
+        }
+      ]
+    },
+    {
+      "icon": "fas fa-solid fa-cloud",
+      "color": "#ED5151",
+      "target": "http://localhost/",
+      "type": "html",
+      "display": "App01",
+      "roles": [
+        {
+          "id": 2,
+          "name": "App01"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+# Always LF in the repository and in checkouts, on every OS
+* text=auto eol=lf
+
+*.png binary
+*.woff2 binary

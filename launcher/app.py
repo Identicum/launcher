@@ -7,9 +7,10 @@ from datetime import date
 
 from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.concurrency import run_in_threadpool
+from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import JSONResponse, RedirectResponse
 
-from . import dataio, db, links
+from . import dataio, db, links, web
 from .auth import SameOriginMiddleware, User, admin_user, current_user
 from .config import Settings
 
@@ -48,6 +49,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app = FastAPI(title=settings.app_title, lifespan=lifespan, docs_url=None, redoc_url=None, openapi_url=None)
     app.state.settings = settings
     app.add_middleware(SameOriginMiddleware)
+    app.add_middleware(GZipMiddleware, minimum_size=1000)
+    templates = web.setup(app)
 
     def get_engine(request: Request):
         return request.app.state.engine
@@ -60,6 +63,23 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             logger.exception("Health check failed")
             return JSONResponse({"status": "DOWN"}, status_code=503)
         return {"status": "UP"}
+
+    # ---- pages ----
+
+    @app.get("/", include_in_schema=False)
+    @app.get("/menu", include_in_schema=False)
+    def launcher_page(request: Request, user: User = Depends(current_user), engine=Depends(get_engine)):
+        with engine.connect() as conn:
+            found = links.visible_links(conn, user.roles, settings.public_role)
+        return templates.TemplateResponse(request, "launcher.html", {"settings": settings, "user": user, "links": found})
+
+    @app.get("/admin", include_in_schema=False)
+    def admin_page(request: Request, user: User = Depends(admin_user)):
+        return templates.TemplateResponse(request, "admin.html", {"settings": settings, "user": user})
+
+    @app.get("/admin/links", include_in_schema=False)
+    def old_admin_page():
+        return RedirectResponse("/admin")
 
     @app.get("/logout")
     def logout():

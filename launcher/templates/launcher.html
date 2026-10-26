@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block navbar_center %}
+{% if links %}
+<div class="search-box mx-auto">
+  <i class="fa-solid fa-magnifying-glass search-icon" aria-hidden="true"></i>
+  <input id="search" type="search" class="form-control" placeholder="Search applications" aria-label="Search applications" autocomplete="off">
+  <kbd class="search-hint d-none d-md-inline" aria-hidden="true">/</kbd>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% if links %}
+<div class="d-flex align-items-baseline justify-content-between mb-3">
+  <h1 class="h5 mb-0">Your applications</h1>
+  <span class="text-body-secondary small" id="count">{{ links | length }}</span>
+</div>
+<div class="tile-grid" id="tiles">
+  {% for link in links %}
+  <a class="tile" href="{{ link.target | safe_url }}" target="_blank" rel="noopener"
+     data-search="{{ (link.display ~ ' ' ~ link.target) | lower }}"
+     style="--tile-color: {{ link.color | safe_color }}">
+    <span class="tile-icon"><i class="{{ link.icon or 'fa-solid fa-link' }}" aria-hidden="true"></i></span>
+    <span class="tile-label">{{ link.display }}</span>
+  </a>
+  {% endfor %}
+</div>
+<div class="empty-state d-none" id="no-results">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <p class="mb-0">No applications match your search.</p>
+</div>
+{% else %}
+<div class="empty-state">
+  <i class="fa-solid fa-table-cells-large"></i>
+  <h1 class="h5">No applications yet</h1>
+  <p class="mb-0">There are no applications assigned to your roles. Contact your administrator if you expected to see some here.</p>
+  {% if user.is_admin %}<a class="btn btn-primary mt-3" href="/admin"><i class="fa-solid fa-plus me-2"></i>Add links</a>{% endif %}
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ static('launcher.js') }}"></script>
+{% endblock %}

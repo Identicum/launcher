@@ -1,3 +1,8 @@
+# Local environment: Keycloak (IdP) + IPAx (OIDC proxy) + launcher on PostgreSQL.
+# Needs "127.0.0.1 idp" in /etc/hosts. Open http://localhost and log in with demo/demo (admin) or user/user.
+# Other databases: docker compose -f compose.yaml -f compose.oracle.yaml up -d   (or compose.mysql.yaml)
+name: launcher
+
 services:
     db:
         container_name: db
@@ -13,7 +18,7 @@ services:
 
     idp:
         container_name: idp
-        image: ghcr.io/identicum/keycloak:26.1
+        image: ghcr.io/identicum/keycloak:26.8
         pull_policy: always
         restart: always
         ports:
@@ -37,20 +42,24 @@ services:
 
     launcher:
         container_name: launcher
-        image: ghcr.io/identicum/launcher:latest
-        pull_policy: always
+        # built from this repository; use "image: ghcr.io/identicum/launcher:latest" for the published image
+        build: ..
+        image: launcher:local
         restart: always
-        ports:
-            - 8081:8081
+        # not published: only IPAx may reach the launcher, or the IPAx-* headers could be forged
         environment:
-            - APP_PARAMETERS=--spring.config.location=/config/application.properties --logging.level.org.springframework.security=DEBUG
+            ADMIN_ROLE: Launcher_Administrators
+            DB_TYPE: postgresql
+            DB_HOST: db
+            DB_NAME: launcherdb
+            DB_USER: launcherusr
+            DB_PASSWORD: launcherpwd
+            LOG_LEVEL: INFO
         volumes:
-            - ./application.properties:/config/application.properties:ro
             - ./data.json:/data/data.json:ro
-            # - ../target/launcher.jar:/app/launcher.jar
         depends_on:
-            idp_config:
-                condition: service_completed_successfully
+            db:
+                condition: service_healthy
 
     ipax:
         container_name: ipax
@@ -60,10 +69,16 @@ services:
         ports:
             - 80:80
         environment:
+            IPAX_MODE: proxy
             NGINX_RESOLVER: 127.0.0.11 valid=5s
-            NGINX_LOG_LEVEL: debug
             OIDC_DISCOVERY: http://idp:8080/realms/launcher/.well-known/openid-configuration
             OIDC_CLIENT_ID: ipax_client_id
             OIDC_CLIENT_SECRET: ipax_client_secret
             OIDC_SCOPE: openid profile email launcher_scope
-            OIDC_POST_LOGOUT_REDIRECT_URI: http://localhost/logoutSuccess.html
+        volumes:
+            - ./ipax/:/var/ipax/proxy_conf.d/:ro
+        depends_on:
+            idp_config:
+                condition: service_completed_successfully
+            launcher:
+                condition: service_healthy

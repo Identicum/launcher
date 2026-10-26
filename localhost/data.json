@@ -13,14 +13,38 @@
       ]
     },
     {
-      "icon": "fas fa-solid fa-cloud",
+      "icon": "fa-solid fa-cloud",
       "color": "#ED5151",
-      "target": "http://localhost/",
+      "target": "http://localhost/app01",
       "type": "html",
       "display": "App01",
       "roles": [
         {
-          "name": "CN=App01,OU=groups,OU=meta,DC=sherpa,DC=com"
+          "name": "App01"
+        }
+      ]
+    },
+    {
+      "icon": "fa-solid fa-chart-line",
+      "color": "#F46800",
+      "target": "http://localhost/app02",
+      "type": "html",
+      "display": "App02",
+      "roles": [
+        {
+          "name": "App02"
+        }
+      ]
+    },
+    {
+      "icon": "fa-solid fa-key",
+      "color": "#4D8AF0",
+      "target": "http://idp:8080/admin/",
+      "type": "html",
+      "display": "Keycloak Admin Console",
+      "roles": [
+        {
+          "name": "Launcher_Administrators"
         }
       ]
     }

@@ -1,0 +1,26 @@
+# Run the launcher on Oracle instead of PostgreSQL:
+#   docker compose -f compose.yaml -f compose.oracle.yaml up -d
+services:
+    oracle:
+        container_name: oracle
+        image: gvenzl/oracle-free:slim-faststart
+        restart: always
+        ports:
+            - 1521:1521
+        environment:
+            ORACLE_PASSWORD: oraclepwd
+            APP_USER: launcherusr
+            APP_USER_PASSWORD: launcherpwd
+        healthcheck:
+            test: healthcheck.sh
+            interval: 10s
+            retries: 30
+
+    launcher:
+        environment:
+            DB_TYPE: oracle
+            DB_HOST: oracle
+            DB_NAME: FREEPDB1
+        depends_on:
+            oracle:
+                condition: service_healthy

@@ -10,7 +10,7 @@ resource "keycloak_openid_client" "ipax" {
   service_accounts_enabled        = false
   root_url                        = "http://localhost"
   base_url                        = "/"
-  valid_redirect_uris             = ["/private/redirect_uri", "/private/info"]
+  valid_redirect_uris             = ["/private/redirect_uri"]
   valid_post_logout_redirect_uris = ["/logoutSuccess.html"]
 }
 

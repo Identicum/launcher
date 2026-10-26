@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ settings.app_title }}{% endblock %}</title>
+  <link rel="icon" href="{{ static('favicon-32.png') }}" sizes="32x32">
+  <link rel="stylesheet" href="{{ static('vendor/bootstrap/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ static('vendor/fontawesome/css/all.min.css') }}">
+  <link rel="stylesheet" href="{{ static('app.css') }}">
+  <script src="{{ static('theme.js') }}"></script>
+  {% if settings.style_background %}
+  <style>
+    body.custom-background {
+      background: {{ settings.style_background | css_value }};
+      {% if settings.style_background_size %}background-size: {{ settings.style_background_size | css_value }};{% endif %}
+    }
+  </style>
+  {% endif %}
+</head>
+<body class="d-flex flex-column min-vh-100{% if settings.style_background %} custom-background{% endif %}">
+  <nav class="navbar navbar-expand app-navbar sticky-top">
+    <div class="container-xl gap-3">
+      <a class="navbar-brand d-flex align-items-center gap-2 me-0" href="/">
+        <img src="{{ static('favicon-32.png') }}" width="28" height="28" alt="">
+        <span class="fw-semibold d-none d-sm-inline">{{ settings.app_title }}</span>
+      </a>
+      <div class="flex-grow-1">{% block navbar_center %}{% endblock %}</div>
+      {% if user %}
+      <div class="dropdown">
+        <button class="btn btn-user dropdown-toggle d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <span class="avatar" aria-hidden="true">{{ user.username[:1] | upper }}</span>
+          <span class="d-none d-md-inline text-truncate" style="max-width: 12rem">{{ user.username }}</span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+          <li><h6 class="dropdown-header text-truncate" style="max-width: 16rem">{{ user.username }}</h6></li>
+          {% if user.is_admin %}
+          <li><a class="dropdown-item" href="/"><i class="fa-solid fa-table-cells-large fa-fw me-2"></i>Launcher</a></li>
+          <li><a class="dropdown-item" href="/admin"><i class="fa-solid fa-sliders fa-fw me-2"></i>Manage links</a></li>
+          {% endif %}
+          <li>
+            <button class="dropdown-item" type="button" data-theme-toggle>
+              <i class="fa-solid fa-circle-half-stroke fa-fw me-2"></i>Theme: <span data-theme-label>auto</span>
+            </button>
+          </li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="/logout"><i class="fa-solid fa-arrow-right-from-bracket fa-fw me-2"></i>Log out</a></li>
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+  </nav>
+
+  <main class="flex-grow-1 py-4">
+    <div class="container-xl">
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+
+  <footer class="app-footer py-3">
+    <div class="container-xl d-flex justify-content-center gap-3 small">
+      <a href="https://identicum.com" target="_blank" rel="noopener">&copy; Identicum</a>
+      <a href="https://github.com/identicum/launcher" target="_blank" rel="noopener"><i class="fa-brands fa-github me-1"></i>GitHub</a>
+    </div>
+  </footer>
+
+  <script src="{{ static('vendor/bootstrap/bootstrap.bundle.min.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

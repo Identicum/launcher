@@ -1,20 +1,19 @@
-FROM ghcr.io/identicum/alpine-jdk21-maven:latest AS build-env
-
-WORKDIR /workspace/app
-COPY pom.xml .
-RUN mkdir src
-COPY src ./src
-RUN mvn clean package
-
-# ############################################################################
-# Build runtime image
-FROM ghcr.io/identicum/alpine-jre21:latest
+FROM ghcr.io/identicum/alpine-python:latest
 
 WORKDIR /app
-COPY --from=build-env /workspace/app/target/launcher.jar .
+COPY pyproject.toml README.md ./
+COPY launcher ./launcher
+RUN pip install --no-cache-dir . && \
+    rm -rf /app/* && \
+    adduser -D -H -u 1000 launcher && \
+    mkdir -p /data && chown launcher /data
+
+USER launcher
+ENV DATA_DIR=/data \
+    PORT=8080
 EXPOSE 8080
 
-RUN apk add --no-cache curl
-HEALTHCHECK --timeout=5s CMD curl --fail http://localhost:8080/imgs/favicon-32.png || exit 1
+HEALTHCHECK --timeout=5s CMD curl --fail --silent http://localhost:8080/health || exit 1
 
-CMD ["sh", "-c", "java -jar launcher.jar $APP_PARAMETERS"]
+ENTRYPOINT ["launcher"]
+CMD ["serve"]

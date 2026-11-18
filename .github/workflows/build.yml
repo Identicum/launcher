@@ -6,8 +6,8 @@ on:
       - main
   pull_request:
   schedule:
-    # monthly rebuild, to pick up updates of the alpine-python base image
-    - cron: '0 3 2 * *'
+    # monthly rebuild on the 2nd: alpine-python (level 1) rebuilds on the 1st
+    - cron: '0 0 2 * *'
   workflow_dispatch:
 
 permissions:
